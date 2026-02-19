@@ -9,6 +9,7 @@ const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 
 let offset = 0;
+let isAnimating = false;
 
 function getSlots() {
   const vw = window.innerWidth;
@@ -70,20 +71,40 @@ function buildCarousel() {
 }
 
 function transitionCarousel(direction) {
-  track.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
-  track.style.opacity = '0';
-  track.style.transform = `translateX(${direction * 24}px)`;
+  if (isAnimating) return;
+  isAnimating = true;
+
+  const oldCards = Array.from(track.children);
+  const slideOut = direction * -100;
+
+  oldCards.forEach(card => {
+    card.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease';
+    card.style.transform = `translateX(${slideOut}%)`;
+    card.style.opacity = '0';
+  });
 
   setTimeout(() => {
     buildCarousel();
-    track.style.transition = 'none';
-    track.style.opacity = '0';
-    track.style.transform = `translateX(${direction * -24}px)`;
+    const newCards = Array.from(track.children);
+    const slideFrom = direction * 100;
+
+    newCards.forEach(card => {
+      card.style.transition = 'none';
+      card.style.transform = `translateX(${slideFrom}%)`;
+      card.style.opacity = '0';
+    });
+
     track.offsetHeight;
-    track.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
-    track.style.opacity = '1';
-    track.style.transform = 'translateX(0)';
-  }, 180);
+
+    newCards.forEach((card, i) => {
+      card.style.transition = `transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) ${i * 18}ms, opacity 0.35s ease ${i * 18}ms`;
+      card.style.transform = 'translateX(0)';
+      card.style.opacity = card.classList.contains('size-sm') ? '0.45' :
+                           card.classList.contains('size-md') ? '0.7' : '1';
+    });
+
+    setTimeout(() => { isAnimating = false; }, 350 + newCards.length * 18);
+  }, 350);
 }
 
 prevBtn.addEventListener('click', () => { offset--; transitionCarousel(-1); });
