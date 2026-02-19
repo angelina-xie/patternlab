@@ -1,7 +1,7 @@
 const patternImages = [
-  'https://your-image-1.jpg',
-  'https://your-image-2.jpg',
-  'https://your-image-3.jpg',
+  'pattern1.jpg',
+  'pattern2.jpg',
+  'pattern3.jpg',
   
 ];;
     const count = Math.max(6, Math.floor(size / 12));
