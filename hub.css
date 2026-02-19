@@ -28,7 +28,7 @@ body {
  ;
 }
 
-/* ===== Container ===== */
+
 .container {
   width: 100%;
   max-width: 900px;
@@ -39,7 +39,7 @@ body {
   gap: 0;
 }
 
-/* ===== Logo ===== */
+
 .logo {
   display: flex;
   align-items: center;
@@ -87,7 +87,7 @@ body {
   outline: none;
 }
 
-/* ===== Description ===== */
+
 .description {
   max-width: 660px;
   text-align: center;
@@ -99,7 +99,7 @@ body {
   font-family: 'Anuphan', sans-serif;
 }
 
-/* ===== Carousel ===== */
+
 .carousel-section {
   width: 100%;
   display: flex;
@@ -155,12 +155,12 @@ body {
   display: block;
 }
 
-/* Size variants — JS will set exact pixel sizes via CSS vars but these handle layout */
+
 .pattern-card.size-sm  { opacity: 0.45; }
 .pattern-card.size-md  { opacity: 0.7; }
 .pattern-card.size-lg  { opacity: 1; }
 
-/* ===== Responsive ===== */
+
 @media (max-width: 600px) {
   .logo-icon {
     width: 48px;
