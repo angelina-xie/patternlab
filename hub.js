@@ -1,4 +1,3 @@
-
 const patternImages = [
   'pattern1.jpg',
   'pattern2.jpg',
@@ -70,8 +69,25 @@ function buildCarousel() {
   });
 }
 
-prevBtn.addEventListener('click', () => { offset--; buildCarousel(); });
-nextBtn.addEventListener('click', () => { offset++; buildCarousel(); });
+function transitionCarousel(direction) {
+  track.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+  track.style.opacity = '0';
+  track.style.transform = `translateX(${direction * 24}px)`;
+
+  setTimeout(() => {
+    buildCarousel();
+    track.style.transition = 'none';
+    track.style.opacity = '0';
+    track.style.transform = `translateX(${direction * -24}px)`;
+    track.offsetHeight;
+    track.style.transition = 'opacity 0.18s ease, transform 0.18s ease';
+    track.style.opacity = '1';
+    track.style.transform = 'translateX(0)';
+  }, 180);
+}
+
+prevBtn.addEventListener('click', () => { offset--; transitionCarousel(-1); });
+nextBtn.addEventListener('click', () => { offset++; transitionCarousel(1); });
 
 let resizeTimer;
 window.addEventListener('resize', () => {
