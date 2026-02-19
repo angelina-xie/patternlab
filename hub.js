@@ -8,107 +8,90 @@ const track = document.getElementById('track');
 const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 
-let offset = 0;
+const total = patternImages.length;
+let current = 1;
 let isAnimating = false;
 
-function getSlots() {
-  const vw = window.innerWidth;
-  const BASE = vw < 480 ? 80 : vw < 700 ? 100 : 130;
-  if (vw < 480) {
-    return [
-      { cls: 'size-md', px: BASE * 0.65 },
-      { cls: 'size-lg', px: BASE },
-      { cls: 'size-lg', px: BASE },
-      { cls: 'size-md', px: BASE * 0.65 },
-    ];
-  }
-  if (vw < 700) {
-    return [
-      { cls: 'size-sm', px: BASE * 0.5 },
-      { cls: 'size-md', px: BASE * 0.75 },
-      { cls: 'size-lg', px: BASE },
-      { cls: 'size-lg', px: BASE },
-      { cls: 'size-md', px: BASE * 0.75 },
-      { cls: 'size-sm', px: BASE * 0.5 },
-    ];
-  }
-  return [
-    { cls: 'size-sm', px: BASE * 0.45 },
-    { cls: 'size-sm', px: BASE * 0.65 },
-    { cls: 'size-md', px: BASE * 0.8 },
-    { cls: 'size-lg', px: BASE },
-    { cls: 'size-lg', px: BASE },
-    { cls: 'size-lg', px: BASE },
-    { cls: 'size-md', px: BASE * 0.8 },
-    { cls: 'size-sm', px: BASE * 0.65 },
-    { cls: 'size-sm', px: BASE * 0.45 },
-  ];
+function buildSlide(src, index) {
+  const slide = document.createElement('div');
+  slide.style.flexShrink = '0';
+  slide.style.width = '100%';
+  slide.style.display = 'flex';
+  slide.style.alignItems = 'center';
+  slide.style.justifyContent = 'center';
+
+  const img = document.createElement('img');
+  img.src = src;
+  img.alt = 'Pattern ' + (index + 1);
+  img.style.width = '130px';
+  img.style.height = '130px';
+  img.style.objectFit = 'cover';
+  img.style.borderRadius = '8px';
+  img.style.display = 'block';
+
+  slide.appendChild(img);
+  return slide;
 }
 
 function buildCarousel() {
   track.innerHTML = '';
-  const slots = getSlots();
-  slots.forEach((slot, i) => {
-    const imageIndex = ((i + offset) % patternImages.length + patternImages.length) % patternImages.length;
-    const px = Math.round(slot.px);
 
-    const card = document.createElement('div');
-    card.className = `pattern-card ${slot.cls}`;
-    card.style.width = px + 'px';
-    card.style.height = px + 'px';
+  const wrapper = track.parentElement;
+  wrapper.style.overflow = 'hidden';
 
-    const img = document.createElement('img');
-    img.src = patternImages[imageIndex];
-    img.alt = 'Pattern ' + (imageIndex + 1);
-    img.style.width = '100%';
-    img.style.height = '100%';
-    img.style.objectFit = 'cover';
-    img.style.display = 'block';
+  track.style.display = 'flex';
+  track.style.width = ((total + 2) * 100) + '%';
+  track.style.transition = 'none';
 
-    card.appendChild(img);
-    track.appendChild(card);
+  // Clone of last slide at the front
+  track.appendChild(buildSlide(patternImages[total - 1], total - 1));
+
+  // All real slides
+  patternImages.forEach((src, i) => {
+    track.appendChild(buildSlide(src, i));
   });
+
+  // Clone of first slide at the end
+  track.appendChild(buildSlide(patternImages[0], 0));
+
+  goTo(current, false);
 }
 
-function transitionCarousel(direction) {
+function goTo(index, animate) {
+  current = index;
+  const offset = -(current * (100 / (total + 2)));
+
+  track.style.transition = animate
+    ? 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+    : 'none';
+
+  track.style.transform = `translateX(${offset}%)`;
+}
+
+function next() {
   if (isAnimating) return;
   isAnimating = true;
-
-  const oldCards = Array.from(track.children);
-  const slideOut = direction * -100;
-
-  oldCards.forEach(card => {
-    card.style.transition = 'transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s ease';
-    card.style.transform = `translateX(${slideOut}%)`;
-    card.style.opacity = '0';
-  });
+  goTo(current + 1, true);
 
   setTimeout(() => {
-    buildCarousel();
-    const newCards = Array.from(track.children);
-    const slideFrom = direction * 100;
-
-    newCards.forEach(card => {
-      card.style.transition = 'none';
-      card.style.transform = `translateX(${slideFrom}%)`;
-      card.style.opacity = '0';
-    });
-
-    track.offsetHeight;
-
-    newCards.forEach((card, i) => {
-      card.style.transition = `transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) ${i * 18}ms, opacity 0.35s ease ${i * 18}ms`;
-      card.style.transform = 'translateX(0)';
-      card.style.opacity = card.classList.contains('size-sm') ? '0.45' :
-                           card.classList.contains('size-md') ? '0.7' : '1';
-    });
-
-    setTimeout(() => { isAnimating = false; }, 350 + newCards.length * 18);
-  }, 350);
+    if (current === total + 1) goTo(1, false);
+    isAnimating = false;
+  }, 400);
 }
 
-prevBtn.addEventListener('click', () => { offset--; transitionCarousel(-1); });
-nextBtn.addEventListener('click', () => { offset++; transitionCarousel(1); });
+function prev() {
+  if (isAnimating) return;
+  isAnimating = true;
+  goTo(current - 1, true);
+
+  setTimeout(() => {
+    if (current === 0) goTo(total, false);
+    isAnimating = false;
+  }, 400);
+}
+
+nextBtn.addEventListener('click', next);
+prevBtn.addEventListener('click', prev);
 
 let resizeTimer;
 window.addEventListener('resize', () => {
