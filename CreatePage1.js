@@ -11,7 +11,6 @@ function drawSpectrum() {
   const w = specCanvas.width;
   const h = specCanvas.height;
 
-  // Full hue rainbow
   const grad = specCtx.createLinearGradient(0, 0, w, 0);
   grad.addColorStop(0,      '#ff0000');
   grad.addColorStop(0.1667, '#ffff00');
@@ -23,14 +22,12 @@ function drawSpectrum() {
   specCtx.fillStyle = grad;
   specCtx.fillRect(0, 0, w, h);
 
-  // White fade on top half (lighter shades)
   const white = specCtx.createLinearGradient(0, 0, 0, h * 0.5);
   white.addColorStop(0, 'rgba(255,255,255,0.7)');
   white.addColorStop(1, 'rgba(255,255,255,0)');
   specCtx.fillStyle = white;
   specCtx.fillRect(0, 0, w, h * 0.5);
 
-  // Black fade on bottom half (darker shades)
   const black = specCtx.createLinearGradient(0, h * 0.5, 0, h);
   black.addColorStop(0, 'rgba(0,0,0,0)');
   black.addColorStop(1, 'rgba(0,0,0,0.7)');
@@ -39,25 +36,6 @@ function drawSpectrum() {
 }
 
 drawSpectrum();
-
-// Click spectrum to pick color
-specCanvas.addEventListener('click', e => {
-  const rect = specCanvas.getBoundingClientRect();
-  const x = Math.round((e.clientX - rect.left) * (specCanvas.width / rect.width));
-  const y = Math.round((e.clientY - rect.top)  * (specCanvas.height / rect.height));
-  const px = specCtx.getImageData(
-    Math.min(x, specCanvas.width - 1),
-    Math.min(y, specCanvas.height - 1),
-    1, 1
-  ).data;
-  color = rgbToHex(px[0], px[1], px[2]);
-
-  const cursor = document.getElementById('spectrumCursor');
-  cursor.style.display = 'block';
-  cursor.style.left = (e.clientX - rect.left) + 'px';
-
-  if (tool === 'eraser') tool = 'brush';
-});
 
 // ── Tool state ─────────────────────────────────────────────
 let tool      = 'brush';
@@ -78,16 +56,36 @@ function setTool(t) {
   if (t === 'eraser') document.getElementById('eraserBtn').classList.add('active');
 }
 
+// Click spectrum to pick color and switch back to brush
+specCanvas.addEventListener('click', e => {
+  const rect = specCanvas.getBoundingClientRect();
+  const x = Math.round((e.clientX - rect.left) * (specCanvas.width / rect.width));
+  const y = Math.round((e.clientY - rect.top)  * (specCanvas.height / rect.height));
+  const px = specCtx.getImageData(
+    Math.min(x, specCanvas.width - 1),
+    Math.min(y, specCanvas.height - 1),
+    1, 1
+  ).data;
+  color = rgbToHex(px[0], px[1], px[2]);
+
+  const cursor = document.getElementById('spectrumCursor');
+  cursor.style.display = 'block';
+  cursor.style.left = (e.clientX - rect.left) + 'px';
+
+  setTool('brush');
+});
+
 document.getElementById('fillBtn').addEventListener('click',   () => setTool('fill'));
 document.getElementById('eraserBtn').addEventListener('click', () => setTool('eraser'));
 document.getElementById('undoBtn').addEventListener('click',   undo);
 
+// Clicking a size deselects eraser/fill and switches back to brush
 document.querySelectorAll('.size-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     brushSize = +btn.dataset.size;
-    if (tool === 'eraser') tool = 'brush';
+    setTool('brush');
   });
 });
 
