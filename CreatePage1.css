@@ -189,7 +189,6 @@ canvas#spectrumBar {
   cursor: pointer;
   align-self: center;
   transition: background 0.15s, color 0.15s;
-  letter-spacing: 0.08em;
 }
 
 .next-btn:hover { background: black; color: white; }
