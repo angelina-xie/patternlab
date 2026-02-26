@@ -9,6 +9,8 @@
   align-items: center;
   gap: 18px;
   margin-bottom: 30px;
+  height: 50px;
+  width: auto;
 }
 
 .logo-text {
@@ -21,17 +23,17 @@
 }
 
 .logo img {
-  width: 50px;
-  height: auto;
+  width: 40px;
+  height: 40px;
   position: relative;
   top: -5px;
   left: 5px;
-  margin-right: 8px;
+  margin-right: 5px;
 }
 
 body {
   font-family: 'Anuphan', sans-serif;
-  background: white;
+  background: #f7f7f5;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -74,7 +76,7 @@ canvas#mainCanvas {
   padding: 6px 8px;
   border: 1px solid black;
   border-top: none;
-  background: #fff;
+  background: #f7f7f5;
 }
 
 .size-group {
