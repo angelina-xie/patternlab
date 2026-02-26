@@ -21,17 +21,17 @@
 }
 
 .logo img {
-  width: 60px;
+  width: 50px;
   height: auto;
   position: relative;
   top: -5px;
   left: 5px;
-  margin-right: -8px;
+  margin-right: 8px;
 }
 
 body {
   font-family: 'Anuphan', sans-serif;
-  background: #f7f7f5;
+  background: white;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
