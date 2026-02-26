@@ -71,6 +71,7 @@ canvas#mainCanvas {
   align-items: center;
   gap: 2px;
   flex-shrink: 0;
+  border-left: 10px;
 }
 
 .size-btn {
@@ -91,10 +92,12 @@ canvas#mainCanvas {
   background: #111;
   pointer-events: none;
   transition: box-shadow 0.1s;
+  padding-left: 4px;
+  position-left: 10px;
 }
 
 .size-btn.active .size-dot,
-.size-btn:hover .size-dot {
+.size-btn.hover .size-dot {
   box-shadow: 0 0 0 2px #999;
 }
 
@@ -105,6 +108,7 @@ canvas#mainCanvas {
   position: relative;
   display: flex;
   align-items: center;
+  padding-left: 7px;
 }
 
 canvas#spectrumBar {
@@ -120,8 +124,8 @@ canvas#spectrumBar {
   top: -2px;
   width: 3px;
   height: calc(100% + 4px);
-  background: rgba(255,255,255,0.85);
-  border: 1.5px solid #333;
+  background: white;
+  border: 0.5px solid black;
   border-radius: 2px;
   pointer-events: none;
   transform: translateX(-50%);
@@ -131,8 +135,9 @@ canvas#spectrumBar {
 .icon-group {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 5px;
   flex-shrink: 0;
+  padding-left: 10px;
 }
 
 .icon-btn {
@@ -151,7 +156,7 @@ canvas#spectrumBar {
   overflow: hidden;
 }
 
-.icon-btn:hover { opacity: 1; }
+.icon-btn.hover { opacity: 1; }
 .icon-btn.active { opacity: 1; }
 
 .icon-btn img {
