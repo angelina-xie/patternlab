@@ -7,19 +7,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://use.typekit.net/exw4bfv.css">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="CreatePage1.css">
 </head>
 <body>
 
 <div class="logo">
-  <img src="PatternLabLogo.png">
+  <img src="PatternLabLogo.png" alt="PatternLab Logo">
   <span class="logo-text">PatternLab</span>
 </div>
 
 <p class="instructions">
   First, draw a background for your pattern. Use the tools below to draw on
-  the canvas. Then, draw something in the middle - make sure the middle object
+  the canvas. Then, draw something in the middle — make sure the middle object
   doesn't touch the edges!
 </p>
 
@@ -27,7 +27,6 @@
   <canvas id="mainCanvas" width="350" height="350"></canvas>
 
   <div class="toolbar">
-    <!-- Brush sizes -->
     <div class="size-group">
       <button class="size-btn active" data-size="3" title="Small brush">
         <div class="size-dot" style="width:7px;height:7px;"></div>
@@ -40,22 +39,20 @@
       </button>
     </div>
 
-    <!-- Rainbow color bar -->
     <div class="spectrum-item" id="spectrumWrap">
       <canvas id="spectrumBar" width="400" height="22"></canvas>
       <div class="spectrum-cursor" id="spectrumCursor"></div>
     </div>
 
-    <!-- Tool icons -->
     <div class="icon-group">
       <button class="icon-btn" id="fillBtn" title="Fill">
-        <img src="fillbucket.png" alt="fillbucket.png">
+        <img src="" alt="fill">
       </button>
       <button class="icon-btn" id="eraserBtn" title="Eraser">
-        <img src="eraser.png" alt="eraser.png">
+        <img src="" alt="eraser">
       </button>
       <button class="icon-btn" id="undoBtn" title="Undo">
-        <img src="undo.png" alt="undo.png">
+        <img src="" alt="undo">
       </button>
     </div>
   </div>
