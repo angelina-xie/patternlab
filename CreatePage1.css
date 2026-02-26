@@ -28,7 +28,6 @@
   height: 40px;
   position: relative;
   left: 5px;
-  top: 2px;
   margin-right: 5px;
 }
 
@@ -188,6 +187,7 @@ canvas#spectrumBar {
   cursor: pointer;
   align-self: center;
   transition: background 0.15s;
+  font-size: clamp(0.4vw)
 }
 
 .next-btn:hover { background: black; color: white; }
