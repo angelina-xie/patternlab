@@ -1,15 +1,14 @@
-<link rel="stylesheet" href="https://use.typekit.net/exw4bfv.css">
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+
 .logo {
   display: flex;
   align-items: center;
   gap: 18px;
   margin-bottom: 30px;
-
 }
 
 .logo-text {
@@ -20,6 +19,7 @@
   color: #1a1a1a;
   line-height: 1;
 }
+
 body {
   font-family: 'Anuphan', sans-serif;
   background: white;
@@ -42,7 +42,7 @@ body {
 .drawing-area {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   width: 350px;
 }
 
@@ -55,54 +55,24 @@ canvas#mainCanvas {
   border: 1px solid black;
 }
 
-/* TOOLBAR */
+/* TOOLBAR — stretches to fill parent (350px), no explicit width needed */
 .toolbar {
-  width: 350px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 6px 10px;
+  gap: 6px;
+  padding: 6px 8px;
   border: 1px solid black;
   border-top: none;
   background: #fff;
-}
-
-.toolbar-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-}
-
-/* Size dot items cluster left */
-.toolbar-item.size-item {
-  flex: 0 0 auto;
-  padding: 0 2px;
-}
-
-/* Icon button items cluster right */
-.toolbar-item.icon-item {
-  flex: 0 0 auto;
-  padding: 0 2px;
 }
 
 .size-group {
   display: flex;
   align-items: center;
   gap: 2px;
-  justify-content: flex-start;
-  margin-right: 15px;
+  flex-shrink: 0;
 }
 
-.icon-group {
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  justify-content: flex-end;
-  margin-left: 15px;
-}
-
-/* Size dots */
 .size-btn {
   display: flex;
   align-items: center;
@@ -128,7 +98,43 @@ canvas#mainCanvas {
   box-shadow: 0 0 0 2px #999;
 }
 
-/* Icon buttons */
+/* Rainbow bar stretches to fill remaining space */
+.spectrum-item {
+  flex: 1 1 0;
+  min-width: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+canvas#spectrumBar {
+  display: block;
+  width: 100%;
+  height: 22px;
+  border-radius: 3px;
+  cursor: crosshair;
+}
+
+.spectrum-cursor {
+  position: absolute;
+  top: -2px;
+  width: 3px;
+  height: calc(100% + 4px);
+  background: rgba(255,255,255,0.85);
+  border: 1.5px solid #333;
+  border-radius: 2px;
+  pointer-events: none;
+  transform: translateX(-50%);
+  display: none;
+}
+
+.icon-group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
 .icon-btn {
   width: 28px;
   height: 28px;
@@ -155,88 +161,6 @@ canvas#mainCanvas {
   display: block;
 }
 
-/* Spectrum */
-.spectrum-item {
-  flex: 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-canvas#spectrumBar {
-  display: block;
-  width: 100%;
-  height: 22px;
-  border-radius: 2px;
-  cursor: crosshair;
-}
-
-.spectrum-cursor {
-  position: absolute;
-  top: -2px;
-  width: 4px;
-  height: calc(100% + 4px);
-  background: rgba(255, 255, 255, 0.85);
-  border: 1.5px solid #333;
-  border-radius: 2px;
-  pointer-events: none;
-  transform: translateX(-50%);
-  display: none;
-}
-
-/* Color popup */
-.color-popup {
-  display: none;
-  position: absolute;
-  bottom: 36px;
-  left: 0;
-  background: white;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  z-index: 300;
-  width: 220px;
-}
-
-.color-popup.open { display: block; }
-
-.color-popup-label {
-  font-size: 11px;
-  color: #999;
-  margin-bottom: 6px;
-}
-
-.color-popup input[type="color"] {
-  width: 100%;
-  height: 38px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 10px;
-  padding: 2px;
-  display: block;
-}
-
-.preset-grid {
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  gap: 4px;
-}
-
-.preset-swatch {
-  width: 22px;
-  height: 22px;
-  border-radius: 3px;
-  cursor: pointer;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  transition: transform 0.1s;
-}
-
-.preset-swatch:hover { transform: scale(1.2); }
-
-/* Next button */
 .next-btn {
   margin-top: 16px;
   padding: 8px 28px;
@@ -247,6 +171,7 @@ canvas#spectrumBar {
   font-size: 14px;
   color: #222;
   cursor: pointer;
+  align-self: center;
   transition: background 0.15s;
 }
 
@@ -258,4 +183,3 @@ canvas#spectrumBar {
   display: block;
   margin-right: -8px;
 }
-
