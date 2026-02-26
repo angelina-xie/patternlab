@@ -94,8 +94,6 @@ canvas#mainCanvas {
   background: #111;
   pointer-events: none;
   transition: box-shadow 0.1s;
-  padding-left: 4px;
-  position-left: 10px;
 }
 
 .size-btn.active .size-dot,
@@ -103,7 +101,6 @@ canvas#mainCanvas {
   box-shadow: 0 0 0 2px #999;
 }
 
-/* Rainbow bar stretches to fill remaining space */
 .spectrum-item {
   flex: 1 1 0;
   min-width: 0;
