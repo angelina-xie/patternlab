@@ -108,6 +108,7 @@ canvas.addEventListener('mousedown', e => {
   if (tool === 'fill') {
     saveHistory();
     floodFill(Math.round(x), Math.round(y), color);
+    setTool('brush'); // deselect fill after use
     return;
   }
   drawing = true;
