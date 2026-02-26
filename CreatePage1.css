@@ -8,36 +8,46 @@
   display: flex;
   align-items: center;
   gap: 18px;
-  margin-bottom: 22px;
+  margin-bottom: 30px;
 }
-
 
 .logo-text {
   font-family: 'Lynda', sans-serif;
-  font-size: 46px;
+  font-size: clamp(48px, 8vw, 50px);
   font-weight: 100;
-  letter-spacing: 4px;
+  letter-spacing: 6px;
   color: #1a1a1a;
   line-height: 1;
 }
 
+.logo img {
+  width: 60px;
+  height: auto;
+  position: relative;
+  top: -5px;
+  left: 5px;
+  margin-right: -8px;
+}
+
 body {
   font-family: 'Anuphan', sans-serif;
-  background: white;
+  background: #f7f7f5;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 50px 30px;
-  color: #222;
+  color: #1a1a1a;
 }
 
 .instructions {
-  font-size: 15px;
-  line-height: 1.6;
-  color: #222;
-  margin-bottom: 22px;
-  width: 650px;
+  max-width: 660px;
+  text-align: left;
+  font-size: clamp(14px, 1.8vw, 16px);
+  font-weight: 400;
+  color: #333;
+  line-height: 1.65;
+  margin-bottom: 32px;
   font-family: 'Anuphan', sans-serif;
 }
 
@@ -177,11 +187,4 @@ canvas#spectrumBar {
   transition: background 0.15s;
 }
 
-.next-btn:hover { background: #f5f5f5; }
-
-.logo img {
-  height: 32px;
-  width: auto;
-  display: block;
-  margin-right: -8px;
-}
+.next-btn:hover { background: #f0f0f0; }
