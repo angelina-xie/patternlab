@@ -23,13 +23,7 @@
   line-height: 1;
 }
 
-.logo img {
-  width: 40px;
-  height: 40px;
-  position: relative;
-  left: 5px;
-  margin-right: 5px;
-}
+
 
 body {
   font-family: 'Anuphan', sans-serif;
@@ -175,6 +169,15 @@ canvas#spectrumBar {
   display: block;
 }
 
+.logo img {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  top: -2px;  /* 2px upwards */
+  left: 5px;
+  margin-right: 5px;
+}
+
 .next-btn {
   margin-top: 16px;
   padding: 8px 28px;
@@ -186,8 +189,8 @@ canvas#spectrumBar {
   color: #222;
   cursor: pointer;
   align-self: center;
-  transition: background 0.15s;
-  font-size: clamp(0.4vw)
+  transition: background 0.15s, color 0.15s;
+  letter-spacing: 0.08em;
 }
 
 .next-btn:hover { background: black; color: white; }
